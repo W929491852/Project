@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--约束文件-->
+<!DOCTYPE hibernate-mapping
+        SYSTEM
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd" >
+<hibernate-mapping package="com.qf.domain">
+    <class name="Cart" table="tb_Cart" >
+  		<composite-id>
+  			<key-many-to-one name="user" column="id"></key-many-to-one>
+  			<key-many-to-one name="goods" column="pid"></key-many-to-one>
+  		</composite-id>
+  		<property name="num"></property>
+  		<property name="money"></property>
+  		<property name="pname" length="20"></property>
+    	<property name="price"></property>
+    </class>
+
+</hibernate-mapping>
