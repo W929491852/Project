@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--约束文件-->
+<!DOCTYPE hibernate-mapping
+        SYSTEM
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd" >
+<hibernate-mapping package="com.qf.domain">
+    <class name="Site" table="tb_Site" >
+  		<id name="id">
+  			<generator class="native"></generator>
+  		</id>
+  		<property name="province" length="20"></property>
+  		<property name="city" length="20"></property>
+  		<property name="county" length="20"></property>
+    </class>
+
+</hibernate-mapping>

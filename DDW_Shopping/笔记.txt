@@ -1,0 +1,170 @@
+
+
+项目界面说明：
+数据库说明：
+
+
+
+
+添加商品数量
+insert into tb_goods_type(name,level,parent) values("图书",1,0);
+insert into tb_goods_type(name,level,parent) values("小说",2,1);
+insert into tb_goods_type(name,level,parent) values("青春",2,1);
+insert into tb_goods_type(name,level,parent) values("历史",2,1);
+insert into tb_goods_type(name,level,parent) values("保健",2,1);
+insert into tb_goods_type(name,level,parent) values("旅游",2,1);
+insert into tb_goods_type(name,level,parent) values("期刊",2,1);
+
+三层+MVC
+
+
+MVC:
+M:Model 数据模型-----
+V:View  视图模型-----页面：html、jsp
+C:Controller 控制器模型-----Servlet
+
+三层架构、MVC
+显示层---就是用户看见的层----包名：xxx.xxx.web.xxx
+
+逻辑层---业务逻辑层，承上启下---包名：xxx.xxx.service：拥有dao层对象，不会出现sql语句
+数据层---持久层（操作sql语句的层）---包名：xxx.xxx.dao:SQL语句
+和实体层---表的映射类所在包--包名：xxx.xxx.domain/pojo/bean/entity/model/do
+
+
+界面----》Servlet----》service----->dao----domain---->数据库
+
+项目结构说明：
+src:
+	com.qf.domain：bean类，可以是数据库的表的映射类，也可以普通类
+	com.qf.dao：操作sql的方法所在的接口
+	com.qf.dao.imple：dao层接口的实现类
+	com.qf.service：业务逻辑层的接口，其实就是页面需要的数据方法
+	com.qf.service.imple：service层的实现类
+	com.qf.web.servlet：当前项目中所有的Servlet
+	com.qf.utils：项目的工具类
+config:
+C3P0的配置文件
+
+WebContent:
+admin:后台界面
+	商品：
+	addP.jsp
+	editP.jsp
+	listP.jsp
+	用户：
+	listu.jsp
+	订单：
+	orderlist.jsp
+css:层叠样式表
+images:项目的所有图片
+js:项目的脚本
+前台页面
+
+
+周末：
+后台模块的开发
+
+
+1、建表
+2、新增数据
+要求新增6个部门
+如：研发、财务、运维、销售、行政、人力
+要求新增20名员工
+3、查询薪资最高的员工姓名和工资
+方式一：排序取第一次
+select ename,esal from tbemp order by esal desc limit 0,1;
+方式二：子查询
+select ename,esal from tbemp where esal =(select MAX(esal) from tbemp);
+方式三：连接查询
+select e.ename,e.esal from tbemp  e 
+right join (select MAX(esal) sal from tbemp) e2 on e.esal=e2.sal;
+
+
+4、查询员工的姓名和年薪(月薪*12)
+select ename,esal*12 sal from tbemp;
+
+5、查询有员工的部门的编号和人数
+
+select count(12) ct,deptno from tbemp group by deptno having ct>5;
+
+6、查询所有部门的名称和人数
+select d.dname,ifnull(e.ct,0) from tbdept d left join (select count(12) 
+ct,deptno from tbemp group by deptno) e on d.dno=e.deptno;
+
+6、查询部门的人数超过5的部门名称和人数
+select d.dname,e.ct from tbdept d right join (select count(12) ct,
+deptno from tbemp group by deptno having ct>5) e on d.dno=e.deptno;
+
+
+
+7、查询薪资最高的员工(Boss除外)的姓名和工资
+
+select e1.ename,e1.esal from tbemp e1 right join 
+(select Max(esal) sal from tbemp where eno !=(select eno from tbemp where emno is null)) e2
+ on e1.esal=e2.sal;
+ 
+ 
+ 
+//查询老板
+select eno,ejob from tbemp where emno is null;
+
+
+
+
+8、查询薪水超过平均薪水的员工的姓名和工资
+select e.ename,e.esal from tbemp e where e.esal>(select avg(esal) from tbemp);
+
+
+
+
+9、查询薪水超过其所在部门平均薪水的员工的姓名、部门编号和工资
+//查询部门的平均薪水
+select deptno,avg(esal) from tbemp group by deptno;
+
+//内连接
+select e.deptno,e.ename,e.esal,e2.sal from tbemp e inner join (select deptno,avg(esal) sal from tbemp group by deptno) e2 
+on e.deptno=e2.deptno and e.esal>e2.sal;
+
+//笛卡尔积，效率最低
+select e.deptno,e.ename,e.esal,e2.sal from tbemp e,(select deptno,avg(esal) sal from tbemp group by deptno) e2 
+where e.deptno=e2.deptno and e.esal>e2.sal;
+
+
+10、查询部门中薪水最高的人姓名、工资和所在部门名称
+select e2.ename,e2.esal,d.dname from (select MAX(esal) sal,deptno from tbemp group by deptno)e1 
+left join tbemp e2 on e1.sal=e2.esal 
+left join tbdept d on e2.deptno =d.dno;
+
+
+11、查询主管的姓名和职位
+
+查询所有主管的编号
+select emno from tbemp group by emno having emno is not null;
+//连接查询
+select e.ename,e.ejob from tbemp e inner join 
+(select emno from tbemp group by emno having emno is not null and emno!=7800) e1 on e.eno=e1.emno ;
+//子查询
+select e.ename,e.ejob from tbemp e where eno in(select emno from tbemp group by emno having emno is not null and emno!=7800);
+
+12、查询薪资排名前3的员工姓名和工资
+select ename,esal from tbemp order by esal DESC limit 0,3;
+
+
+13、求薪水排在第4-8名雇员
+select ename,esal from tbemp order by esal DESC limit 3,5;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

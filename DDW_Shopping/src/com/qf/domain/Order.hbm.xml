@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--约束文件-->
+<!DOCTYPE hibernate-mapping
+        SYSTEM
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd" >
+<hibernate-mapping package="com.qf.domain">
+    <class name="Order" table="tb_Order" >
+  		<id name="id">
+  			<generator class="assigned"></generator>
+  		</id>
+  		<many-to-one name="user" column="uid"></many-to-one>
+  		<property name="money"></property>
+  		<property name="time"></property>
+  		<property name="status" length="20"></property>
+    	<many-to-one name="address" column="aid"></many-to-one>
+    </class>
+
+</hibernate-mapping>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--约束文件-->
+<!DOCTYPE hibernate-mapping
+        SYSTEM
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd" >
+<hibernate-mapping package="com.qf.domain">
+    <class name="Goods" table="tb_Goods" >
+  		<id name="id">
+  			<generator class="native"></generator>
+  		</id>
+  		<property name="name" length="20"></property>
+    	<property name="pubdate" length="30"></property>
+    	<property name="picture" length="255"></property>
+   		<property name="price"></property>
+   		<property name="star"></property>
+   		<property name="intro"></property>
+   		<many-to-one name="type" column="typeid"></many-to-one>
+    </class>
+
+</hibernate-mapping>

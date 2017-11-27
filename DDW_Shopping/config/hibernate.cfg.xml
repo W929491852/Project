@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--约束文件 -->
+<!DOCTYPE hibernate-configuration PUBLIC
+        "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+<!--hibernate的配置信息 -->
+<hibernate-configuration>
+	<!--具体的配置信息： 四本一言 四大基本项：驱动、url、用户名、密码 一大方言：要根据数据库版本来选择 -->
+	<session-factory>
+		<!--1、 驱动类名全称 -->
+		<property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
+		<!--2、数据库的url -->
+		<property name="hibernate.connection.url">jdbc:mysql://localhost:3306/ddw_shopping_01?characterEncoding=UTF-8</property>
+		<!--3、用户名 -->
+		<property name="hibernate.connection.username">root</property>
+		<!--4、密码 -->
+		<property name="hibernate.connection.password">123456</property>
+		<!-- 5、方言 -->
+		<property name="hibernate.dialect">org.hibernate.dialect.MySQL57Dialect</property>
+		<!--标记ddl的操作方式：create\update\create-drop -->
+		<property name="hibernate.hbm2ddl.auto">update</property>
+		<!--显示自动生成的sql语句 -->
+		<property name="hibernate.show_sql">true</property>
+		<!--格式化sql语句 -->
+		<property name="hibernate.format_sql">true</property>
+		<!--映射文件的配置 -->
+		<mapping resource="com/qf/domain/Address.hbm.xml"></mapping>
+		<mapping resource="com/qf/domain/Cart.hbm.xml"></mapping>
+		<mapping resource="com/qf/domain/Goods.hbm.xml"></mapping>
+		<mapping resource="com/qf/domain/GoodsType.hbm.xml"></mapping>
+		<mapping resource="com/qf/domain/Order.hbm.xml"></mapping>
+		<mapping resource="com/qf/domain/OrderItem.hbm.xml"></mapping>
+		<mapping resource="com/qf/domain/Site.hbm.xml"></mapping>
+		<mapping resource="com/qf/domain/User.hbm.xml"></mapping>
+
+	</session-factory>
+</hibernate-configuration>

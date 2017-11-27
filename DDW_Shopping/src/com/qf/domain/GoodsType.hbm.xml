@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--约束文件-->
+<!DOCTYPE hibernate-mapping
+        SYSTEM
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd" >
+<hibernate-mapping package="com.qf.domain">
+    <class name="GoodsType" table="tb_GoodsType" >
+  		<id name="id">
+  			<generator class="native"></generator>
+  		</id>
+  		<property name="name" length="20"></property>
+    	<property name="level"></property>
+    	<property name="parent"></property>
+    </class>
+
+</hibernate-mapping>
